@@ -8,13 +8,14 @@ version = "0.2.0"
 description = "CLI tool for installing skills, agents, workflows, and rules from an Enterprise Skills Catalog"
 readme = "README.md"
 license = {text = "MIT"}
+license-files = []
 requires-python = ">=3.10"
 authors = [
-    {name = "Enterprise Skills Catalog"},
+    {name = "Yash Shingvi"},
 ]
-keywords = ["skills", "catalog", "cli", "enterprise", "agents", "workflows"]
+keywords = ["skills", "catalog", "cli", "enterprise", "agents", "workflows", "ai", "prompts"]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Environment :: Console",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
@@ -25,6 +26,7 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
     "Topic :: Software Development :: Libraries",
     "Topic :: System :: Systems Administration",
+    "Typing :: Typed",
 ]
 dependencies = [
     "click>=8.1",
@@ -37,9 +39,10 @@ dependencies = [
 skillsctl = "skillsctl.main:cli"
 
 [project.urls]
-Homepage = "https://github.com/your-org/enterprise-skills-catalog"
-Repository = "https://github.com/your-org/enterprise-skills-catalog"
-Issues = "https://github.com/your-org/enterprise-skills-catalog/issues"
+Homepage = "https://github.com/yashshingvi/skillsctl"
+Repository = "https://github.com/yashshingvi/skillsctl"
+Issues = "https://github.com/yashshingvi/skillsctl/issues"
+"Skills Catalog Server" = "https://github.com/yashshingvi/skills-catalog"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/skillsctl"]
