@@ -13,13 +13,12 @@ pip install skillsctl
 ## Quick Start
 
 ```bash
-# Point at your org's catalog
+# Install a skill — first run will prompt for your catalog URL and install directory
+skillsctl install send-slack-notification --with-deps
+
+# Or set the source upfront
 export SKILLSCTL_SOURCE=https://catalog.your-company.com
-
-# Search for available items
 skillsctl search slack
-
-# Install a skill (with its dependencies)
 skillsctl install send-slack-notification --with-deps
 
 # Install into a custom directory (flat, no category subfolder)
@@ -36,6 +35,24 @@ skillsctl list
 # Update everything to latest
 skillsctl sync
 ```
+
+## First-Run Setup
+
+On the first run (when no `skills.yaml` is found), `skillsctl` interactively prompts for:
+
+- **Catalog source URL** — your catalog server address (default: `http://localhost:8000`)
+- **Default install directory** — where skill files are saved (default: `.skillsctl`, e.g. `.claude`)
+
+```
+Welcome to skillsctl! Let's get you set up.
+
+Catalog source URL (http://localhost:8000): https://catalog.acme-corp.com
+Default install directory (where skill files are saved) (.skillsctl): .claude
+
+Config saved to skills.yaml. Files will be installed to .claude/{category}/
+```
+
+Config is saved to `skills.yaml` and reused on every subsequent run. Commands that don't need a server (`list`, `remove`, `config`) skip the prompt entirely.
 
 ## Commands
 
@@ -66,7 +83,10 @@ Set project-wide configuration stored in `skills.yaml`.
 ```bash
 # Change the default install directory for all future installs
 skillsctl config base-dir .claude      # saves to .claude/{category}/{name}.md
-skillsctl config base-dir .windsurf   # saves to .windsurf/{category}/{name}.md
+skillsctl config base-dir .windsurf    # saves to .windsurf/{category}/{name}.md
+
+# Show the current value
+skillsctl config base-dir
 
 # Reset to default (.skillsctl)
 skillsctl config base-dir --unset
@@ -124,7 +144,7 @@ The catalog server URL is resolved in this order:
 1. `--source` CLI flag: `skillsctl --source https://catalog.example.com install my-skill`
 2. `source` field in `skills.yaml`
 3. `SKILLSCTL_SOURCE` environment variable
-4. Default: `http://localhost:8000`
+4. Interactive prompt on first run (saved to `skills.yaml`)
 
 ### Lockfile (`skills.yaml`)
 
@@ -144,7 +164,7 @@ installed:
 
 ### Project Structure
 
-After installing items, your project will look like:
+After installing items with the default config:
 
 ```
 your-project/
