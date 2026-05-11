@@ -19,8 +19,8 @@ export SKILLSCTL_SOURCE=https://catalog.your-company.com
 # Search for available items
 skillsctl search slack
 
-# Install a skill (with its dependencies)
-skillsctl install send-slack-notification --with-deps
+# Install a skill (its dependencies come along too)
+skillsctl install send-slack-notification
 
 # Install into a custom directory (flat, no category subfolder)
 skillsctl install my-rule --path .claude/commands
@@ -44,11 +44,8 @@ skillsctl sync
 Download and save items from the catalog into your project.
 
 ```bash
-# Install one or more items
+# Install one or more items (required dependencies are pulled in by default)
 skillsctl install send-slack-notification http-request
-
-# Auto-install required dependencies
-skillsctl install slack-ops-agent --with-deps
 
 # Skip dependency resolution
 skillsctl install send-email --no-deps
@@ -204,7 +201,7 @@ Commit both `skills.yaml` and the install directory to version control so your e
 2. Downloads the raw `.md` file via `GET /api/v1/items/<name>/raw`
 3. Saves it to `.skillsctl/{category}/{name}.md` (or custom path if `--path` is set)
 4. Updates `skills.yaml` with the installed version
-5. With `--with-deps`, recursively resolves and installs items listed in `requires`
+5. Recursively resolves and installs items listed in `requires` (suppress with `--no-deps`)
 
 ## Setting Up a Catalog Server
 
