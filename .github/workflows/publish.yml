@@ -1,0 +1,36 @@
+name: Publish to PyPI
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write  # Required for OIDC trusted publishing
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install build tools
+        run: pip install hatch
+
+      - name: Smoke test
+        run: |
+          pip install -e .
+          skillsctl --version
+          python -c "from skillsctl import __version__; print(f'OK v{__version__}')"
+
+      - name: Build package
+        run: hatch build
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
